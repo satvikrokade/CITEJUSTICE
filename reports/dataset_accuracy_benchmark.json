@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-10-07 20:52:11",
+  "total_samples": 50,
+  "accuracy": 52.0,
+  "precision": 45.95,
+  "recall": 80.95,
+  "f1_score": 58.62,
+  "avg_latency_ms": 213.15,
+  "confusion_matrix": {
+    "tp": 17,
+    "tn": 9,
+    "fp": 20,
+    "fn": 4
+  }
+}

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CiteJustice LexGraphFormer | AI Precedent Graph Adjudication</title>
+  <meta name="description" content="CiteJustice LexGraphFormer v2.0 — Explainable AI Judgment Prediction using Dynamic Precedent Evolution Graph (DPEG) over 782,945 Indian judicial precedents.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/index.css">
+</head>
+<body class="dark-theme">
+
+<!-- ═══════════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════════════════ -->
+<header class="app-header">
+
+  <!-- Brand left -->
+  <div class="brand-left">
+    <div class="brand-icon-box" title="CiteJustice — Scale of Justice AI">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#c89f56" stroke-width="1.8">
+        <path d="M12 3v18M3 7l9-4 9 4M6 21h12M4 7l3 8h-6l3-8zm13 0l3 8h-6l3-8z"/>
+      </svg>
+    </div>
+
+    <div class="brand-name-group">
+      <span class="brand-title">CiteJustice</span>
+      <span class="brand-model">LexGraphFormer</span>
+    </div>
+
+    <span class="badge-tag">v2.0 Precedent Graph AI</span>
+
+    <div class="precedent-status">
+      <span class="status-dot"></span>
+      <span id="corpusStatusText">782,945 Indian Precedents Active</span>
+    </div>
+  </div>
+
+  <!-- Header actions right -->
+  <div class="header-right">
+    <select id="benchmarkSelect" class="pill-btn btn-select">
+      <option value="">Benchmark Scenario ▾</option>
+    </select>
+
+    <button id="btnStatutesModal" class="pill-btn" title="IPC ⇔ BNS 2023 Statutory Cross-Mapper">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15z"/>
+      </svg>
+      [ IPC ⇔ BNS Cross-Mapper ]
+    </button>
+
+    <button id="btnToggleGraphSidebar" class="pill-btn" title="Open Precedent Evolution Graph (DPEG)">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><circle cx="6" cy="18" r="3"/>
+        <line x1="9" y1="6" x2="15" y2="6"/><line x1="6" y1="9" x2="6" y2="15"/>
+        <line x1="18" y1="9" x2="18" y2="15"/><line x1="9" y1="18" x2="15" y2="18"/>
+      </svg>
+      [ Precedent Graph Drawer ]
+    </button>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════
+     PIPELINE PHASE BAR
+════════════════════════════════════════════════════════ -->
+<div class="pipeline-bar">
+  <div class="phase-list">
+    <div class="phase-chip">P1 Ingestion</div>
+    <span class="phase-arrow">›</span>
+    <div class="phase-chip">P2 Precedent Graph</div>
+    <span class="phase-arrow">›</span>
+    <div class="phase-chip active">P3 Transformer Model</div>
+    <span class="phase-arrow">›</span>
+    <div class="phase-chip">P4 Report Generation</div>
+  </div>
+
+  <a href="/pipeline" class="pill-btn" style="height:24px;padding:0 10px;font-size:11px;" title="Phase Pipeline Manager">
+    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/>
+      <line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/>
+      <line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/>
+      <line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>
+    </svg>
+    🎛️ Phase Pipeline Manager
+  </a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     TWO-PANEL COCKPIT
+════════════════════════════════════════════════════════ -->
+<main class="cockpit">
+
+  <!-- ─── LEFT PANEL: Case Intake & Evidence Studio ─── -->
+  <section class="panel">
+    <div class="panel-head">
+      <h2 class="panel-title">Case Intake &amp; Evidence Studio</h2>
+      <span class="panel-badge">Step 01–03</span>
+    </div>
+
+    <div class="panel-body">
+
+      <!-- Case title -->
+      <div>
+        <label class="field-label" for="caseTitle">Case Title / Cause Title</label>
+        <input type="text" id="caseTitle" class="f-input"
+               value="State of Maharashtra v. Anand Chinchwade &amp; Ors.">
+      </div>
+
+      <!-- Factual matrix -->
+      <div>
+        <label class="field-label" for="caseFacts">Factual Matrix &amp; FIR Extract</label>
+        <textarea id="caseFacts" class="f-textarea" rows="8">The accused are charged under Sections 302, 120-B read with Section 34 of the Indian Penal Code (IPC). The informant states that on the night of 14th August, the victim was intercepted near National Highway 48 and assaulted with sharp weapons. Primary evidence includes eyewitness testimony of PW-1, medical certificates denoting cranial lacerations, and recovery of instruments of crime. Defence contends alibi and systemic delay in FIR dispatch.</textarea>
+      </div>
+
+      <!-- Collapsible: Court Classification, Charges & PDF Upload -->
+      <button type="button" id="btnAdvancedToggle" class="drawer-toggle" onclick="toggleAdvancedIntake()">
+        <span class="ti" id="advancedIntakeIcon">▶</span>
+        <span id="advancedIntakeLabel">Click to open Court Classification, Charges &amp; PDF Upload</span>
+      </button>
+
+      <div class="drawer-body" id="advancedIntakeContainer" hidden>
+        <div class="row-2">
+          <div>
+            <label class="field-label" for="caseType">Court Classification</label>
+            <select id="caseType" class="f-select">
+              <option value="Criminal Appeal">Criminal Appeal</option>
+              <option value="Special Leave Petition (Crl)">SLP (Criminal)</option>
+              <option value="Bail Application">Bail Application (CrPC 439)</option>
+              <option value="Criminal Petition (Quashing)">Sec 482 Quashing</option>
+              <option value="Civil Appeal">Civil Appeal</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="courtJurisdiction">Jurisdiction</label>
+            <select id="courtJurisdiction" class="f-select">
+              <option value="Supreme Court of India">Supreme Court of India</option>
+              <option value="High Court of Judicature">High Court of Judicature</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="field-label" for="userNotes">Statutory Pleas &amp; Prosecution Charges</label>
+          <input type="text" id="userNotes" class="f-input"
+                 value="Prosecution charges under Section 302, 120-B IPC (BNS 103, 61). Defence contends systemic delay in FIR and lack of independent corroborate evidence.">
+        </div>
+
+        <!-- PDF Dropzone -->
+        <div class="dropzone" id="fileDropzone">
+          <input type="file" id="fileUpload" class="file-hidden" accept=".pdf,.txt,.docx">
+          <div>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+            </svg>
+          </div>
+          <div class="dz-title">Drag &amp; drop FIR, Petition PDF or Judgments</div>
+          <div class="dz-sub">Tesseract OCR &amp; NLP Entity Extraction Auto-Active</div>
+        </div>
+
+        <!-- Statute chips -->
+        <div class="chips-wrap">
+          <div class="chips-label">Detected Statutory Cross-References (IPC ⇔ BNS 2023)</div>
+          <div class="chips" id="detectedStatutesChips">
+            <span class="chip-gold">IPC 302 → BNS 103(1) (Murder)</span>
+            <span class="chip-gold">IPC 120-B → BNS 61(2) (Conspiracy)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Primary CTA -->
+      <button id="btnRunPrediction" class="btn-gold-cta">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+        </svg>
+        <span id="btnRunPredictionText">⚙ Analyze Case with LexGraphFormer</span>
+      </button>
+
+    </div><!-- /panel-body -->
+  </section>
+
+  <!-- ─── RIGHT PANEL: AI Verdict & Reasoning Engine ─── -->
+  <section class="panel">
+    <div class="panel-head">
+      <h2 class="panel-title">AI Verdict &amp; Reasoning Engine</h2>
+      <span id="verdictStatusBadge" class="panel-badge">Awaiting Input</span>
+    </div>
+
+    <div class="panel-body">
+
+      <!-- EMPTY STATE — shown before analysis -->
+      <div id="emptyVerdictState" class="verdict-empty">
+        <div class="verdict-empty-icon">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M12 3v18M3 7l9-4 9 4M6 21h12M4 7l3 8h-6l3-8zm13 0l3 8h-6l3-8z"/>
+          </svg>
+        </div>
+        <div class="verdict-empty-title">Verdict output will appear here after case analysis</div>
+        <div class="verdict-empty-sub">Ready to invoke Graph Neural Networks &amp; Precedent Embeddings</div>
+      </div>
+
+      <!-- ACTIVE VERDICT — shown after analysis runs -->
+      <div id="activeVerdictState" class="verdict-card hidden">
+        <div class="verdict-row">
+          <span class="verdict-tag">⚖ Predicted Outcome</span>
+          <span id="appealRiskBadge" class="risk-badge risk-low">Appeal Risk: Low</span>
+        </div>
+        <div id="outcomeTitle" class="verdict-title">Appeal Allowed in Part: Conviction Modified</div>
+        <p id="outcomeSummary" class="verdict-summary">
+          Conviction altered from Section 302 IPC (BNS 103) to Section 304 Part II IPC (BNS 105).
+        </p>
+
+        <!-- Confidence metrics -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-num" id="confidenceValue">89.4%</div>
+            <div class="metric-lbl">Model Confidence</div>
+            <div class="meter"><div id="confidenceBar" class="meter-fill" style="width:89.4%"></div></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-num em" id="controllingPrecedentsCount">3</div>
+            <div class="metric-lbl">Controlling Law (Active)</div>
+            <div class="meter"><div class="meter-fill em" style="width:100%"></div></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-num rs" id="overruledBlockedCount">1</div>
+            <div class="metric-lbl">Overruled Law Blocked</div>
+            <div class="meter"><div class="meter-fill rs" style="width:100%"></div></div>
+          </div>
+        </div>
+
+        <!-- DPEG integrity alert -->
+        <div id="overruledAlertBox" class="dpeg-alert">
+          <span class="ai">🛡</span>
+          <div>
+            <strong>DPEG PRECEDENT INTEGRITY ACTIVE:</strong>
+            <span id="overruledAlertContent">
+              Neutralized 1 zombie precedent: <em>State of Maharashtra v. Digambar Shankar (1976)</em>.
+              Revoked by 5-Judge Constitution Bench.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEGAL REASONING — collapsible -->
+      <button type="button" id="btnReasoningToggle" class="drawer-toggle" onclick="toggleLegalReasoning()">
+        <span class="ti" id="legalReasoningIcon">▶</span>
+        <span id="legalReasoningLabel">Click to expand Legal Reasoning &amp; Citation Network</span>
+      </button>
+
+      <div class="drawer-body" id="legalReasoningContainer" hidden>
+        <div class="irac-stack">
+
+          <div class="irac-card closed" id="iracCardI">
+            <div class="irac-hd" onclick="toggleIrac('iracCardI')">
+              <span><span class="irac-pill">I</span>ISSUE (Legal Questions Framed)</span>
+              <span class="irac-chev">▾</span>
+            </div>
+            <div class="irac-body" id="iracIssue">
+              Whether the fatal injury inflicted during a sudden and spontaneous quarrel without premeditation
+              constitutes Murder under Section 300/302 IPC (Section 103 BNS 2023) or qualifies for Exception 4
+              to Section 300 (punishable under Section 304 Part I/II IPC / Section 105 BNS 2023).
+            </div>
+          </div>
+
+          <div class="irac-card closed" id="iracCardR">
+            <div class="irac-hd" onclick="toggleIrac('iracCardR')">
+              <span><span class="irac-pill">R</span>RULE (Statutory Tests &amp; Binding Precedents)</span>
+              <span class="irac-chev">▾</span>
+            </div>
+            <div class="irac-body" id="iracRule">
+              1. Exception 4 to Section 300 IPC / Section 105 BNS: Culpable homicide is not murder if
+              committed without premeditation in a sudden fight in the heat of passion.<br><br>
+              2. Sunder Singh v. State of Uttarakhand (2016 5-Judge Bench): Explicitly overruled Digambar
+              Shankar (1976), affirming that single blow injuries during sudden disputes cannot mechanically
+              presume premeditated intention.<br><br>
+              3. Anbazhagan v. State (2023 INSC 644): Formulated comprehensive 10-point test for Exception 4.
+            </div>
+          </div>
+
+          <div class="irac-card closed" id="iracCardA">
+            <div class="irac-hd" onclick="toggleIrac('iracCardA')">
+              <span><span class="irac-pill">A</span>APPLICATION (Factual Matrix &amp; DPEG Synthesis)</span>
+              <span class="irac-chev">▾</span>
+            </div>
+            <div class="irac-body" id="iracApplication">
+              Applying controlling precedents to the present facts: The incident occurred spontaneously without
+              prior enmity. Under the older overruled doctrine (Digambar Shankar 1976), the case would have been
+              mechanically sustained as Murder. However, DPEG detected that Digambar Shankar was expressly
+              Overruled. Following the active binding precedents (Gurmail Singh and Anbazhagan 2023), the appellant
+              did not take cruel advantage. Thus, Exception 4 to Section 300 IPC is satisfied.
+            </div>
+          </div>
+
+          <div class="irac-card closed" id="iracCardC">
+            <div class="irac-hd" onclick="toggleIrac('iracCardC')">
+              <span><span class="irac-pill">C</span>CONCLUSION (Operative Order &amp; Directions)</span>
+              <span class="irac-chev">▾</span>
+            </div>
+            <div class="irac-body" id="iracConclusion">
+              The conviction under Section 302 IPC (corresponding to Section 103 BNS 2023) is set aside. The
+              appellant is convicted under Section 304 Part II IPC (Section 105 BNS 2023) with sentence modified
+              accordingly.
+            </div>
+          </div>
+
+          <div class="irac-card closed" id="iracCardP">
+            <div class="irac-hd" onclick="toggleIrac('iracCardP')">
+              <span><span class="irac-pill">P</span>CONTROLLING PRECEDENTS (DPEG Citation Network)</span>
+              <span class="irac-chev">▾</span>
+            </div>
+            <div class="irac-body">
+              <div class="prec-list" id="controllingPrecedentsList"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Action footer -->
+      <div class="action-row">
+        <button id="btnExportPdf" class="action-btn">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+          📄 Export PDF
+        </button>
+
+        <button id="btnShareBench" class="action-btn">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/>
+            <polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/>
+          </svg>
+          📤 Share to Bench
+        </button>
+
+        <button id="btnSaveArchive" class="action-btn">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/>
+            <line x1="10" y1="12" x2="14" y2="12"/>
+          </svg>
+          🗄️ Save to Archive
+        </button>
+      </div>
+
+    </div><!-- /panel-body -->
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════
+     GRAPH SIDEBAR DRAWER
+════════════════════════════════════════════════════════ -->
+<aside id="graphSidebarDrawer" class="graph-drawer">
+  <div class="gdrawer-head">
+    <div class="gdrawer-info">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><circle cx="6" cy="18" r="3"/>
+        <line x1="9" y1="6" x2="15" y2="6"/><line x1="6" y1="9" x2="6" y2="15"/>
+        <line x1="18" y1="9" x2="18" y2="15"/><line x1="9" y1="18" x2="15" y2="18"/>
+      </svg>
+      <div>
+        <div class="gdrawer-title">Dynamic Precedent Evolution (DPEG)</div>
+        <div class="gdrawer-sub">Citation Graph · Authority Weights · Overruled Suppression</div>
+      </div>
+    </div>
+    <div class="gdrawer-actions">
+      <div class="toggle-group">
+        <button id="btnModeDpeg" class="tgl-btn on">DPEG Active</button>
+        <button id="btnModeNaive" class="tgl-btn">Naive RAG</button>
+      </div>
+      <button id="btnCloseGraphSidebar" class="icon-btn" title="Close">&times;</button>
+    </div>
+  </div>
+
+  <div class="gdrawer-body">
+    <div class="graph-toolbar">
+      <span>Formula: <span class="formula">Authority = 2F + R − D − 3O</span></span>
+      <div class="g-acts">
+        <button id="btnZoomIn"    class="icon-btn">+</button>
+        <button id="btnZoomOut"   class="icon-btn">−</button>
+        <button id="btnResetGraph" class="icon-btn">↻</button>
+      </div>
+    </div>
+
+    <div class="canvas-wrap">
+      <canvas id="graphCanvas"></canvas>
+      <div id="graphTooltip" class="graph-tip"></div>
+
+      <div id="flawAlertBanner" class="flaw-banner hidden">
+        <span class="fi">⚠</span>
+        <div>
+          <strong>STALE PRECEDENT PITFALL — NAIVE RAG:</strong>
+          Retrieved <em>State of Maharashtra v. Digambar Shankar (1976)</em> at 94% text similarity —
+          completely ignoring it was <strong>EXPRESSLY OVERRULED</strong> in 2016.
+          CiteJustice DPEG prevents this fatal error.
+        </div>
+      </div>
+    </div>
+
+    <div class="graph-foot">
+      <div class="g-legend">
+        <div class="leg-item"><span class="leg-dot nd-active"></span> Active</div>
+        <div class="leg-item"><span class="leg-dot nd-disting"></span> Distinguished</div>
+        <div class="leg-item"><span class="leg-dot nd-overruled"></span> Overruled</div>
+        <div class="leg-item"><span class="leg-line eg-followed"></span> Followed (+2)</div>
+        <div class="leg-item"><span class="leg-line eg-relied"></span> Relied (+1)</div>
+        <div class="leg-item"><span class="leg-line eg-disting"></span> Disting. (−1)</div>
+        <div class="leg-item"><span class="leg-line eg-overruled"></span> Overruled (−3)</div>
+      </div>
+      <div id="selectedNodeDetails" class="node-inspector">
+        Click any node to inspect its judicial evolution &amp; authority audit.
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div id="sidebarBackdrop" class="drawer-backdrop hidden"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     STATUTE CROSS-MAPPER MODAL
+════════════════════════════════════════════════════════ -->
+<div id="statutesModal" class="modal-overlay hidden">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="modal-title">Bilingual Statutory Cross-Mapper — IPC 1860 ⇔ BNS 2023</div>
+      <button id="btnCloseModal" class="icon-btn">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="text" id="statuteSearchInput" class="stat-search"
+             placeholder="Search by section number or keyword (e.g. 302, murder, bail, quash)…">
+      <div class="tbl-wrap">
+        <table class="stat-table">
+          <thead>
+            <tr>
+              <th>Historical Statute (IPC / CrPC / IEA)</th>
+              <th>Modern Equivalent (BNS / BNSS / BSA 2023)</th>
+              <th>Offense</th>
+              <th>Classification</th>
+              <th>Punishment</th>
+            </tr>
+          </thead>
+          <tbody id="statuteTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toastNotification" class="toast hidden"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

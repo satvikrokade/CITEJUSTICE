@@ -1,0 +1,51 @@
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.cache/
+
+# Large Model Weights (Prevents GitHub 100MB rejection)
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+backend/storage/models/
+storage/models/
+
+# Large Datasets & Tabular Dumps
+*.parquet
+*.jsonl
+backend/storage/pipeline_runs/
+backend/storage/dataset/
+storage/pipeline_runs/
+
+# Internal Team Workflow, Non-Code Reports & Local Office Documents
+TEAM_WORKFLOW_AND_ROLES.txt
+PROJECT_ROADMAP.md
+*.docx
+*.pptx
+*.xlsx
+*.pdf
+admin_use_case_diagram_*.jpg
+Phase 1 guide.md
+API_SPECIFICATION.txt
+reports/*.pdf
+reports/*.html
+
+# IDE & OS Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Build & Temporary Files
+dist/
+build/
+*.egg-info/
