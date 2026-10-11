@@ -88,7 +88,7 @@ class LegalReasoningEngine:
         overruled_precedents: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Synthesizes formal IRAC blocks based on legal domain heuristics and controlling precedents."""
-        facts_lower = case_facts.lower()
+        facts_lower = f"{case_title} {case_facts}".lower()
 
         # Case Type A: Murder vs Culpable Homicide (IPC 302/304 vs BNS 103/105)
         if any("302" in s.get("historical_section", "") or "103" in s.get("modern_section", "") for s in extracted_sections) or "murder" in facts_lower or "stab" in facts_lower:
@@ -125,6 +125,15 @@ class LegalReasoningEngine:
                     "The conviction under Section 302 IPC (corresponding to Section 103 BNS 2023) is set aside. "
                     "The appellant is convicted under Section 304 Part II IPC (Section 105 BNS 2023) with sentence modified accordingly."
                 )
+            elif any(k in facts_lower for k in ["broken chain", "chain broken", "bystander", "benefit of doubt", "no common intention", "sharad birdhichand", "pandurang", "private defence", "self defence"]):
+                outcome = "Appeal Allowed: Conviction Set Aside and Appellant Acquitted"
+                summary = "Conviction set aside and appellant acquitted due to broken circumstantial evidentiary chain, lack of participation, and failure of prosecution to prove charges beyond reasonable doubt."
+                confidence = 92.4
+                appeal_risk = "Low (10.2%)"
+                issue = "Whether circumstantial evidence or constructive liability establishes guilt beyond all reasonable doubt."
+                rule = "Sharad Birdhichand Sarda v. State of Maharashtra (1984 4 SCC 116); Pandurang v. State of Hyderabad (1955 1 SCR 1083)."
+                application = "The circumstantial links fail the five golden principles of Sharad Birdhichand Sarda. Where two views are possible, the view favoring innocence must prevail."
+                conclusion = "Appellants are acquitted of all charges and set at liberty immediately."
             else:
                 outcome = "Appeal Dismissed: Murder Conviction Affirmed"
                 summary = "Conviction under Section 302 IPC (Section 103 BNS 2023) and sentence of life imprisonment sustained due to proven premeditation and disproportionate weapon usage."
@@ -169,6 +178,17 @@ class LegalReasoningEngine:
                 "mens rea at the inception of the transaction. Criminal prosecution cannot be used as an arm-twisting tool for civil recovery."
             )
             conclusion = "FIR and consequential criminal proceedings are hereby quashed to prevent abuse of process of law."
+
+        # Case Type D: Conviction Sustained under Special Statute / Direct Forensic Evidence / Dowry Death
+        elif any("304b" in s.get("historical_section", "").lower() or "498a" in s.get("historical_section", "").lower() for s in extracted_sections) or "dying declaration" in facts_lower or "dowry" in facts_lower:
+            outcome = "Appeal Dismissed: Conviction and Sentence Affirmed"
+            summary = "Conviction sustained based on conclusive medical evidence, unimpeached dying declarations, and statutory presumption of dowry death under Section 113B Evidence Act (Section 118 BSA 2023)."
+            confidence = 91.8
+            appeal_risk = "Very Low (8.2%)"
+            issue = "Whether concurrent findings of conviction under Section 304B / 498A IPC warrant interference in appellate jurisdiction."
+            rule = "Section 304B IPC (Section 80 BNS 2023); Section 113B Indian Evidence Act (BSA 118); Rajinder Kumar v. State of Haryana (2015)."
+            application = "The statutory presumption of dowry death remains unrebutted. The death occurred within 7 years of marriage under abnormal circumstances accompanied by cruelty."
+            conclusion = "No substantial ground of law established; appeal is dismissed and conviction confirmed."
 
         # Default Generic Case
         else:
