@@ -1,15 +1,18 @@
 {
-  "timestamp": "2026-10-07 20:52:11",
-  "total_samples": 50,
-  "accuracy": 52.0,
-  "precision": 45.95,
-  "recall": 80.95,
-  "f1_score": 58.62,
-  "avg_latency_ms": 213.15,
+  "timestamp": "2026-10-11 17:48:53",
+  "total_samples": 150,
+  "standard_accuracy": 56.0,
+  "standard_f1": 62.92,
+  "calibrated_threshold": 0.64,
+  "accuracy": 64.0,
+  "precision": 61.67,
+  "recall": 54.41,
+  "f1_score": 57.81,
+  "avg_latency_ms": 54.98,
   "confusion_matrix": {
-    "tp": 17,
-    "tn": 9,
-    "fp": 20,
-    "fn": 4
+    "tp": 37,
+    "tn": 59,
+    "fp": 23,
+    "fn": 31
   }
 }
