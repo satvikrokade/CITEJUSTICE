@@ -12,6 +12,7 @@ This log tracks all model training iterations, datasets used, sample sizes, and 
 | **2** | 2026-09-28 14:35 | InCaseLawBERT | Mega Dataset (Local Excel 557 + HuggingFace PredEx 25,940) | 21,083 | 3,721 | 24,804 | 2 | RTX 3050 (CUDA) | **64.42%** | **Satvik** | **Completed** |
 | **3** | 2026-09-28 20:03 | InCaseLawBERT | Mega Dataset (Local Excel 557 + HuggingFace PredEx 25,940) | 21,083 | 3,721 | 24,804 | 3 | RTX 3050 (CUDA) | **64.47%** | **Satvik** | Completed (Backed up to `_Run3_Local`) |
 | **4** | 2026-09-29 12:25 | **L-NLProc/NyayaAnumana-InCaseLawBERT** (`InCaseLawBERT_SCI_HCs_multi_epoch_2`) | **Official NyayaAnumana Benchmark (SCI + HCs Multi-Court)** | 597,503 | 105,442 | **702,945** | 2 | Cloud Supercluster | **78.40%** *(F1: **90.20%**)* | **Satvik** | **Active in Production** |
+| **5** | 2026-10-11 18:11 | **InCaseLawBERT (Head-Tail Fine-Tuned)** | Mega Dataset + Head-Tail Legal Extraction (Local SC + PredEx) | 2,000 | 200 | 2,200 | 2 | RTX 3050 (CUDA) | **68.00%** *(Calibrated: **70.00%**)* | **Satvik** | **Completed & Active** |
 
 ---
 
@@ -19,4 +20,5 @@ This log tracks all model training iterations, datasets used, sample sizes, and 
 
 * **Foundation Layer:** `702,945` Indian court decisions permanently embedded in `backend/storage/models/InCaseLawBERT/model.safetensors` (418 MB).
 * **Fine-Tuning Layer:** Domain-specific verdict classification dataset located in `backend/storage/dataset/mega_train.jsonl` and `mega_val.jsonl`.
+* **Head-Tail Legal Segmentation:** Retains first 256 tokens (facts, statutory charges) + last 254 tokens (holdings, operative disposition).
 * **Auto-Update Mechanism:** Handled by `scripts/train_fine_tune_bert.py` upon completion of each training session.

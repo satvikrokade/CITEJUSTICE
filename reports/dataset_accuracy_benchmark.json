@@ -1,18 +1,18 @@
 {
-  "timestamp": "2026-10-11 17:48:53",
-  "total_samples": 150,
-  "standard_accuracy": 56.0,
-  "standard_f1": 62.92,
-  "calibrated_threshold": 0.64,
-  "accuracy": 64.0,
-  "precision": 61.67,
-  "recall": 54.41,
-  "f1_score": 57.81,
-  "avg_latency_ms": 54.98,
+  "timestamp": "2026-10-11 18:12:10",
+  "total_samples": 200,
+  "standard_accuracy": 68.5,
+  "standard_f1": 66.31,
+  "calibrated_threshold": 0.54,
+  "accuracy": 70.0,
+  "precision": 73.42,
+  "recall": 59.79,
+  "f1_score": 65.91,
+  "avg_latency_ms": 32.1,
   "confusion_matrix": {
-    "tp": 37,
-    "tn": 59,
-    "fp": 23,
-    "fn": 31
+    "tp": 58,
+    "tn": 82,
+    "fp": 21,
+    "fn": 39
   }
 }

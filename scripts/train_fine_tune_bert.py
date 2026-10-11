@@ -176,7 +176,7 @@ def run_fine_tuning(
             if step % 25 == 0 or step == len(train_loader):
                 avg_step_loss = running_loss / step_count
                 pct = (step / len(train_loader)) * 100
-                print(f"    Epoch {epoch}/{epochs} | Step {step}/{len(train_loader)} ({pct:.0f}%) | Current Loss: {avg_step_loss:.4f}")
+                print(f"    Epoch {epoch}/{epochs} | Step {step}/{len(train_loader)} ({pct:.0f}%) | Current Loss: {avg_step_loss:.4f}", flush=True)
 
         # Validation Phase
         model.eval()
@@ -188,17 +188,18 @@ def run_fine_tuning(
                 attention_mask = batch["attention_mask"].to(device)
                 labels = batch["label"].to(device)
 
-                outputs = model(input_ids=input_ids, attention_mask=attention_mask)
+                with torch.amp.autocast("cuda", enabled=use_amp):
+                    outputs = model(input_ids=input_ids, attention_mask=attention_mask)
                 preds = torch.argmax(outputs.logits, dim=-1)
                 val_correct += (preds == labels).sum().item()
                 val_total += labels.size(0)
 
         val_acc = (val_correct / val_total) * 100 if val_total > 0 else 0
-        print(f"\n[+] Epoch {epoch} Complete! Validation Accuracy: {val_acc:.2f}% | Elapsed: {time.time() - start_time:.1f}s")
-        print("-" * 70)
+        print(f"\n[+] Epoch {epoch} Complete! Validation Accuracy: {val_acc:.2f}% | Elapsed: {time.time() - start_time:.1f}s", flush=True)
+        print("-" * 70, flush=True)
 
     # 6. Save Fine-Tuned Model Weights & Tokenizer
-    print(f"[*] Step 3: Saving Fine-Tuned Model to: {output_model_dir} ...")
+    print(f"[*] Step 3: Saving Fine-Tuned Model to: {output_model_dir} ...", flush=True)
     model.save_pretrained(output_model_dir)
     tokenizer.save_pretrained(output_model_dir)
 
