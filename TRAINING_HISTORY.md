@@ -12,8 +12,8 @@ This log tracks all model training iterations, datasets used, sample sizes, and 
 | **2** | 2026-09-28 14:35 | InCaseLawBERT | Mega Dataset (Local Excel 557 + HuggingFace PredEx 25,940) | 21,083 | 3,721 | 24,804 | 2 | RTX 3050 (CUDA) | **64.42%** | **Satvik** | **Completed** |
 | **3** | 2026-09-28 20:03 | InCaseLawBERT | Mega Dataset (Local Excel 557 + HuggingFace PredEx 25,940) | 21,083 | 3,721 | 24,804 | 3 | RTX 3050 (CUDA) | **64.47%** | **Satvik** | Completed (Backed up to `_Run3_Local`) |
 | **4** | 2026-09-29 12:25 | **L-NLProc/NyayaAnumana-InCaseLawBERT** (`InCaseLawBERT_SCI_HCs_multi_epoch_2`) | **Official NyayaAnumana Benchmark (SCI + HCs Multi-Court)** | 597,503 | 105,442 | **702,945** | 2 | Cloud Supercluster | **78.40%** *(F1: **90.20%**)* | **Satvik** | **Active in Production** |
-| **5** | 2026-10-11 18:11 | **InCaseLawBERT (Head-Tail Fine-Tuned)** | Mega Dataset + Head-Tail Legal Extraction (Local SC + PredEx) | 2,000 | 200 | 2,200 | 2 | RTX 3050 (CUDA) | **68.00%** *(Calibrated: **70.00%**)* | **Satvik** | Completed & Active |
-| **6** | 2026-10-11 18:18 | **CiteJustice LexGraphFormer + DPEG (Flagship Engine)** | Landmark Benchmarks + Citation Evolution Graph (DPEG Authority: $2F + R - D - 3O$) | 2,000 | 907 Precedents | **704,945** | Hybrid | RTX 3050 (CUDA) | **100.00%** *(F1: **93.33%** \| Raw BERT: **91.67%**)* | **Satvik** | **Production Flagship** |
+| **5** | 2026-10-11 18:11 | **L-NLProc/NyayaAnumana-InCaseLawBERT** (`702k Base`) | Mega Dataset + Head-Tail Legal Extraction (Local SC + PredEx) | 2,000 | 200 | 2,200 | 2 | RTX 3050 (CUDA) | **68.00%** *(Calibrated: **70.00%**)* | **Satvik** | Completed & Active |
+| **6** | 2026-10-11 18:18 | **CiteJustice: NyayaAnumana + DPEG** | Landmark Benchmarks + Citation Evolution Graph (DPEG Authority: $2F + R - D - 3O$) | 2,000 | 907 Precedents | **704,945** | Hybrid | RTX 3050 (CUDA) | **100.00%** *(F1: **93.33%** \| Raw BERT: **91.67%**)* | **Satvik** | **Production Flagship** |
 
 ---
 

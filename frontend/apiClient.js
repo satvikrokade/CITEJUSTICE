@@ -221,6 +221,73 @@ const CiteJusticeAPI = {
   },
 
   /**
+   * Execute Phase 1 for a run via uploaded PDF file.
+   * @param {string} runId
+   * @param {File} file
+   * @returns {Promise<Object>}
+   */
+  async executePhase1Pdf(runId, file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await this._request(`/pipeline/${encodeURIComponent(runId)}/phase1-pdf`, {
+      method: 'POST',
+      body: formData
+    });
+    return await res.json();
+  },
+
+  /**
+   * Execute Phase 1 for a run via raw text.
+   * @param {string} runId
+   * @param {string} rawText
+   * @returns {Promise<Object>}
+   */
+  async executePhase1Text(runId, rawText) {
+    const res = await this._request(`/pipeline/${encodeURIComponent(runId)}/phase1-text`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ raw_text: rawText })
+    });
+    return await res.json();
+  },
+
+  /**
+   * Execute Phase 2: DPEG Multigraph & Hybrid Retrieval Indexing.
+   * @param {string} runId
+   * @returns {Promise<Object>}
+   */
+  async executePhase2(runId) {
+    const res = await this._request(`/pipeline/${encodeURIComponent(runId)}/phase2`, {
+      method: 'POST'
+    });
+    return await res.json();
+  },
+
+  /**
+   * Execute Phase 3: LexGraphFormer Graph Transformer Inference.
+   * @param {string} runId
+   * @returns {Promise<Object>}
+   */
+  async executePhase3(runId) {
+    const res = await this._request(`/pipeline/${encodeURIComponent(runId)}/phase3`, {
+      method: 'POST'
+    });
+    return await res.json();
+  },
+
+  /**
+   * Execute Phase 4: IRAC Verdict & Appeal Risk Synthesis.
+   * @param {string} runId
+   * @returns {Promise<Object>}
+   */
+  async executePhase4(runId) {
+    const res = await this._request(`/pipeline/${encodeURIComponent(runId)}/phase4`, {
+      method: 'POST'
+    });
+    return await res.json();
+  },
+
+  /**
    * Execute all 4 pipeline phases sequentially from judgment text.
    * @param {string} rawText 
    * @param {string} [name] 
